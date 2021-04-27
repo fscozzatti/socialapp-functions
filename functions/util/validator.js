@@ -21,9 +21,9 @@ exports.validateSignupData = (data) => {
 
     if (isEmpty(data.email)){
         errors.email = "Must not be empty"
-    }else if(isEmail(data.email)){
+    }/*else if(isEmail(data.email)){
         errors.email = "Must be a valid email address"
-    }
+    }*/
     if (isEmpty(data.password)){
         errors.password = "Must not be empty"
     }
@@ -40,18 +40,18 @@ exports.validateSignupData = (data) => {
     }
 };
 
-exports.validateLoguinData = (data) => {
+exports.validateLoginData = (data) => {
     let errors = {};
 
-    if (isEmpty(userLog.email)){
+    if (isEmpty(data.email)){
         errors.email = "Must not be empty"
     }
-    if (isEmpty(userLog.password)){
+    if (isEmpty(data.password)){
         errors.password = "Must not be empty"
     }
 
     return {
         errors,
-        valid: Object.keys(errors).length === 0? true : false
+        valid: Object.keys(data).length === 0? true : false
     }
 }
