@@ -3,8 +3,9 @@ const express = require("express");
 const firebase = require("firebase");
 const app = express();
 const { getAllScreams, postOneScream } = require('../functions/handlers/screams');
-const { signup, login, uploadUserImage } = require('../functions/handlers/users')
-const FBAuth = require('../functions/util/fbAuth')
+const { signup, login, uploadUserImage, addUserDetails } = require('../functions/handlers/users')
+const FBAuth = require('../functions/util/fbAuth');
+
 // Screams Route
 app.get('/screams', getAllScreams );
 app.post('/scream', FBAuth, postOneScream);
@@ -12,5 +13,6 @@ app.post('/scream', FBAuth, postOneScream);
 app.post('/signup', signup);
 app.post('/login', login);
 app.post('/user/image', FBAuth, uploadUserImage);
+app.post('/user', FBAuth, addUserDetails);
   
-exports.api = functions.https.onRequest(app);
+exports.api = functions.region('us-central1').https.onRequest(app);
