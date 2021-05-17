@@ -1,4 +1,4 @@
-const db = require('../util/admin');
+const { db } = require('../util/admin');
 
 exports.getAllScreams = (req, res) => {
     db.collection('screams')
@@ -33,3 +33,33 @@ exports.postOneScream =  (req, res) => {
       console.error(error);
       });
 };
+
+exports.getScream = (req, res) => {
+    let screamData = {};
+
+    db.doc(`screams/${req.params.screamId}`)
+    .get()
+    .then((doc) =>{
+        if(!doc.exists){
+            return res.status(404).json({error: "Scream not found"})
+        }
+        screamData = doc.data();
+        screamId = doc.id;
+        return db
+        .collection('comments')
+        .orderBy('createdAt', 'desc')
+        .where('screamId','==', req.params.screamId)
+        .get();
+    })
+    .then((data) => {
+        screamData.comments = [];
+        data.forEach((doc) =>{
+            screamData.comments.push(doc.data());
+        });
+        return res.json(screamData);
+    })
+    .catch( err =>{ 
+        res.status(500).json({ error: err.code });
+        console.error(error);
+     });
+}

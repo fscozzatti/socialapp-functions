@@ -1,10 +1,9 @@
 const { admin, db } = require('../util/admin');
-const firebase = require('firebase');
 const firebaseConfig = require('../util/config');
-
-firebase.initializeApp(firebaseConfig);
-
 const { validateSignupData, validateLoginData, reduceUserDetails} = require('../util/validator')
+
+const firebase = require('firebase');
+firebase.initializeApp(firebaseConfig);
 
 exports.signup = (req, res) => {
     const newUser = {
@@ -66,8 +65,7 @@ exports.signup = (req, res) => {
     };
 
     const { valid, errors } = validateLoginData(userLog);
-    console.log('1:', valid);
-    console.log('2: ', errors);
+
     if(valid){ return res.status(400).json(errors)};
 
  
@@ -96,6 +94,32 @@ exports.addUserDetails = (req, res) => {
             console.error(err);
             return res.status(500).json({ errors: err.code });
         });
+}
+
+exports.getAuthenticatedUser = (req, res) => {
+    let userData = {}
+    db.doc(`/users/${req.user.handle}`)
+    .get()
+    .then((doc) => {
+        if (doc.exists){
+            userData.credentials = doc.data();
+            return db
+            .collection('likes')
+            .where('userHandle', '==', req.user.handle)
+            .get();
+        }
+    })
+    .then((data) => {
+        userData.likes = [];
+        data.forEach((doc) => {
+            userData.likes.push(doc.data());
+        })
+        return res.json(userData)
+    })
+    .catch( (err) => {
+        console.error(err);
+        return res.status(500).json({ errors: err.code });
+    });
 }
 
 exports.uploadUserImage = (req, res) => {
