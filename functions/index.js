@@ -3,19 +3,30 @@ const app = require('express')();
 const { 
     getAllScreams,
     postOneScream,
-    getScream } = require('../functions/handlers/screams');
+    getScream,
+    commentOnScream,
+    likeScream,
+    unlikeScream,
+    deleteScream } = require('../functions/handlers/screams');
+
 const { 
     signup,
     login,
     uploadUserImage,
     addUserDetails,
     getAuthenticatedUser } = require('../functions/handlers/users');
+    
 const FBAuth = require('../functions/util/fbAuth');
 
 // Screams Route
 app.get('/screams', getAllScreams );
-app.post('/scream', FBAuth, postOneScream);
 app.get('/scream/:screamId', getScream);
+app.post('/scream', FBAuth, postOneScream);
+app.post('/scream/:screamId/unlike', FBAuth, unlikeScream);
+app.post('/scream/:screamId/like', FBAuth, likeScream);
+app.post('/scream/:screamId/comment', FBAuth, commentOnScream);
+app.delete('/scream/:screamId', FBAuth, deleteScream);
+
 
 
 //Signup route
