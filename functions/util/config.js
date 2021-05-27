@@ -7,3 +7,5 @@ module.exports = {
     messagingSenderId: "60001805920",
     appId: "1:60001805920:web:ef2e27a2e1765ab9da4505"
   };
+
+  
