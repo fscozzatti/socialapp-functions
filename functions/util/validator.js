@@ -69,3 +69,16 @@ exports.reduceUserDetails = (data) => {
     
     return userDetails;
 }
+
+exports.validatePostScreamData = (data) => {
+    let errors = {};
+
+    if (isEmpty(data.body)){
+        errors.body = "Must not be empty"
+    }
+
+    return {
+        errors,
+        valid: Object.keys(errors).length === 0? true : false
+    }
+}

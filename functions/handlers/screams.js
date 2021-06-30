@@ -1,4 +1,5 @@
 const { db } = require('../util/admin');
+const { validatePostScreamData } = require('../util/validator')
 
 exports.getAllScreams = (req, res) => {
     db.collection('screams')
@@ -31,6 +32,9 @@ exports.postOneScream =  (req, res) => {
         commentCount:0
 
     };
+    const { valid, errors } = validatePostScreamData(newScream);
+    if(!valid){ return res.status(400).json(errors)};
+
 
     db.collection('screams')
     .add(newScream)
