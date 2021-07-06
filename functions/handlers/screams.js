@@ -58,7 +58,7 @@ exports.getScream = (req, res) => {
             return res.status(404).json({error: "Scream not found"})
         }
         screamData = doc.data();
-        screamId = doc.id;
+        screamData.screamId = doc.id;
         return db
         .collection('comments')
         .orderBy('createdAt', 'desc')
