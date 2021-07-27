@@ -1,11 +1,11 @@
 module.exports = {
-    apiKey: "AIzaSyDZPfPfkZrY-AwQb-ylP1dFfAUlYWfYzMo",
-    authDomain: "socialapp-fscozzatti.firebaseapp.com",
-    databaseURL: "https://socialapp-fscozzatti-default-rtdb.firebaseio.com",
-    projectId: "socialapp-fscozzatti",
-    storageBucket: "socialapp-fscozzatti.appspot.com",
-    messagingSenderId: "60001805920",
-    appId: "1:60001805920:web:ef2e27a2e1765ab9da4505"
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+    projectId:  process.env.FIREBASE_PROJECT_ID,
+    storageBucket: proccess.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: proccess.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: proccess.env.FIREBASE_APP_ID
   };
 
   
